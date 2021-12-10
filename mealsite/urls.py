@@ -4,5 +4,6 @@ from .views import IndexView
 app_name='meal'
 
 urlpatterns = [
-    path('', IndexView.as_view(), name="index")
+    path('', IndexView.as_view(), name="index"),
+
 ]

@@ -76,24 +76,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application' #プロジェクト名をxxxに入れる
 
 
-DATABASES = {
+if SQLITE:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
+    }
+else:
+    DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': env('DB_NAME_SQL'),
+        'USER': env('DB_USER_SQL'),
+        'PASSWORD': env('DB_PASSWORD_SQL'),
+        'HOST': 'localhost',
+        'PORT': 3306 if DEBUG else env('DB_PORT_SQL'),
     }
 }
-# if SQLITE:
-#     else:
-#     DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': env('DB_NAME_SQL'),
-#         'USER': env('DB_USER_SQL'),
-#         'PASSWORD': env('DB_PASSWORD_SQL'),
-#         'HOST': 'localhost',
-#         'PORT': 3306 if DEBUG else env('DB_PORT_SQL'),
-#     }
-# }
 
 
 
