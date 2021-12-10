@@ -1,7 +1,7 @@
 from pathlib import Path
 import os
 import environ
-# import django_heroku
+import django_heroku
 
 from django.utils.translation import ugettext_lazy as _
 
@@ -29,7 +29,7 @@ SQLITE = env.get_value('SQLITE', cast = bool, default = True)
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = ['meal-ratings-site.herokuapp.com', 'yourdomain.com']
+    ALLOWED_HOSTS = ['meal-site.herokuapp.com', 'yourdomain.com']
 
 
 INSTALLED_APPS = [
@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
-    # '', #追加したapp名
+    'mealsite', #追加したapp名
 ]
 
 MIDDLEWARE = [
@@ -52,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'app.urls' #プロジェクト名をxxxに入れる
@@ -76,24 +76,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'app.wsgi.application' #プロジェクト名をxxxに入れる
 
 
-if SQLITE:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
+DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DB_NAME_SQL'),
-        'USER': env('DB_USER_SQL'),
-        'PASSWORD': env('DB_PASSWORD_SQL'),
-        'HOST': 'localhost',
-        'PORT': 3306 if DEBUG else env('DB_PORT_SQL'),
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+# if SQLITE:
+#     else:
+#     DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': env('DB_NAME_SQL'),
+#         'USER': env('DB_USER_SQL'),
+#         'PASSWORD': env('DB_PASSWORD_SQL'),
+#         'HOST': 'localhost',
+#         'PORT': 3306 if DEBUG else env('DB_PORT_SQL'),
+#     }
+# }
 
 
 
@@ -146,7 +146,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static/')
 ]
@@ -164,4 +164,4 @@ MEDIA_ROOT = 'media/'
 
 
 #Heroku
-# django_heroku.settings(locals())
+django_heroku.settings(locals())
