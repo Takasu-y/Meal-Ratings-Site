@@ -6,4 +6,16 @@
 
 {% block main %}
     <h1>Catgory List Page</h1>
+    <div>
+        <p></p>
+
+        {% for meal in meals %}
+            <div>
+                <a href="{% url 'meal:mealDetail' meal.id %}">
+                    <span>{{ meal.getAvgRating|floatformat }}/</span>{{ meal.name }} : <span>{{ meal.dateAdded }}</span>
+                </a>
+            </div>
+        {% endfor %}
+
+    </div>
 {% endblock main %}

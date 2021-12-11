@@ -6,4 +6,9 @@
 
 {% block main %}
     <h1>Meal Detail Page</h1>
+    <p>{{ meal.pk }}</p>
+    <p>{{ meal.name }}</p>
+    <p>{{ meal.descriotion }}</p>
+    <p>{{ meal.numberOfVotes }}</p>
+    <p>{{ meal.getAvgRating|floatformat }}</p>
 {% endblock main %}
