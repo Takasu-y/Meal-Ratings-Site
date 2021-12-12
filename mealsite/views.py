@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.db.models import Avg
-
+from django.utils.timezone import make_aware
 import datetime
 
 from .models import Meal, MealRating
@@ -39,7 +39,7 @@ class MealListView(ListView):
             meals = self.model.objects.filter(typicalMealTime=3)
 
         elif self.kwargs["category"] == "recently":
-            now = datetime.datetime.now()
+            now = make_aware(datetime.datetime.now())
             borderElapsedDays = now + datetime.timedelta(days=-3000) #TODO:90日に変更予定
             meals = self.model.objects.all().filter(dateAdded__gte=borderElapsedDays)
 
