@@ -1,5 +1,4 @@
 from django.db import models
-import math
 
 # Create your models here.
 
@@ -60,7 +59,3 @@ class MealRating(models.Model):
 
         verbose_name = 'MealRating'
         verbose_name_plural = 'MealRatings'
-
-    def __str__(self):
-        """Unicode representation of MealRating."""
-        return self.rating

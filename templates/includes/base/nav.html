@@ -10,19 +10,19 @@
                     <a class="nav-link active" aria-current="page" href="/">Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'meal:mealList' %}">Morning</a>
+                    <a class="nav-link" href="{% url 'meal:mealList' 'morning' %}">Morning</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Afternoon</a>
+                    <a class="nav-link" href="{% url 'meal:mealList' 'afternoon' %}">Afternoon</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Evening</a>
+                    <a class="nav-link" href="{% url 'meal:mealList' 'evening' %}">Evening</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Recently Rated</a>
+                    <a class="nav-link" href="{% url 'meal:mealList' 'recently' %}">Recently Rated</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">Top Rated</a>
+                    <a class="nav-link" href="{% url 'meal:mealList' 'topRate' %}">Top Rated</a>
                 </li>
             </ul>
         </div>

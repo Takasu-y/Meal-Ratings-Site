@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.views.generic import ListView, DetailView
 from django.db.models import Avg
 
+import datetime
+
 from .models import Meal, MealRating
 from .forms import MealFrom
 # Create your views here.
@@ -24,16 +26,46 @@ class MealListView(ListView):
     model = Meal
     template_name = "mealSite/categoryList.html"
     context_object_name = "meals"
-    querset = None
-
-    def get(self, request, *args, **kwargs):
-        # q = request.GET.get('q') if request.GET.get('q') != None else ''
-        return super().get(request, *args, **kwargs)
 
     def get_queryset(self):
-        recentlyMeal = Meal.objects.all().annotate(avg_rating = Avg("mealrating__rating")).order_by('-avg_rating')
-        #クラス名は全部小文字
-        return recentlyMeal
+        #objの取得
+        if self.kwargs["category"] == "morning":
+            meals = self.model.objects.filter(typicalMealTime=1)
+
+        elif self.kwargs["category"] == "afternoon":
+            meals = self.model.objects.filter(typicalMealTime=2)
+
+        elif self.kwargs["category"] == "evening":
+            meals = self.model.objects.filter(typicalMealTime=3)
+
+        elif self.kwargs["category"] == "recently":
+            now = datetime.datetime.now()
+            borderElapsedDays = now + datetime.timedelta(days=-3000) #TODO:90日に変更予定
+            meals = self.model.objects.all().filter(dateAdded__gte=borderElapsedDays)
+
+        elif self.kwargs["category"] == "topRate":
+            borderRating = 3.5 #TODO:4.5へ変更予定
+            meals = self.model.objects.all().annotate(avg_rating = Avg("mealrating__rating")).filter(avg_rating__gte=borderRating)
+
+        #取得したmeals objをqでソートする
+        q = self.request.GET.get('q') if self.request.GET.get('q') != None else ''
+
+        if q == "rating":
+            #popular meals
+            meals = meals.annotate(avg_rating = Avg("mealrating__rating")).order_by('-avg_rating')
+        elif q == "date":
+            # new added
+            meals = meals.order_by("-dateAdded")
+        else:
+            meals = meals.order_by("countryOfOrigin")
+
+        return meals
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["category"] = self.kwargs["category"]
+        return context
+
 
 
 

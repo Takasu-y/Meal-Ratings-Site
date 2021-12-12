@@ -5,7 +5,7 @@ app_name='meal'
 
 urlpatterns = [
     path('', IndexView.as_view(), name="index"),
-    path('category/List/', MealListView.as_view(), name="mealList"),
+    path('List/<str:category>/', MealListView.as_view(), name="mealList"),
     path('detail/<int:pk>/', MealDetailView.as_view(), name="mealDetail"),
 
 ]
