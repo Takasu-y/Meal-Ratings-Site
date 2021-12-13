@@ -5,16 +5,16 @@ from django.db import models
 class Meal(models.Model):
     """Model definition for Meal."""
 
-    name = models.CharField("料理名", max_length=120)
-    description = models.TextField("説明")
-    imageUrl = models.URLField("URL", max_length=200)
-    countryOfOrigin = models.CharField("国名", max_length=120)
-    typicalMealTime = models.IntegerField("時間", choices=[
+    name = models.CharField("Meal", max_length=120)
+    description = models.TextField("Description")
+    imageUrl = models.CharField("URL", max_length=200)
+    countryOfOrigin = models.CharField("Country", max_length=120)
+    typicalMealTime = models.IntegerField("Meal Time", choices=[
         (1, "morning"),
         (2, "afternoon"),
         (3, "evening"),
     ])
-    dateAdded = models.DateTimeField("投稿日時", auto_now_add=True)
+    dateAdded = models.DateTimeField("create", auto_now_add=True)
 
 
     def getAvgRating(self):
@@ -26,7 +26,10 @@ class Meal(models.Model):
         for vote in votes:
             sumRating += vote.rating
 
-        avgRating = sumRating / self.numberOfVotes()
+        if self.numberOfVotes() != 0:
+            avgRating = sumRating / self.numberOfVotes()
+        else:
+            avgRating = 0
 
         return avgRating
 
@@ -50,9 +53,9 @@ class Meal(models.Model):
 class MealRating(models.Model):
     """Model definition for MealRating."""
 
-    meal = models.ForeignKey(Meal, verbose_name="食事", on_delete=models.CASCADE)
-    rating = models.FloatField("評価")
-    dateOfRating =models.DateTimeField("評価日時", auto_now_add=True)
+    meal = models.ForeignKey(Meal, verbose_name="Meal", on_delete=models.CASCADE)
+    rating = models.FloatField("Ratings")
+    dateOfRating =models.DateTimeField("Create", auto_now_add=True)
 
     class Meta:
         """Meta definition for MealRating."""

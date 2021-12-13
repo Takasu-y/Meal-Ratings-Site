@@ -1,26 +1,30 @@
 from django.shortcuts import render
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 from django.db.models import Avg
 from django.utils.timezone import make_aware
+from django.urls import reverse_lazy
 import datetime
 
-from .models import Meal, MealRating
-from .forms import MealFrom
+from .models import Meal
+from .forms import MealFrom, MealRatingForm
 # Create your views here.
 
-
-class IndexView(ListView):
+class IndexView(ListView, FormView):
     model = Meal
+    form_class = MealFrom
+    success_url = None
     template_name = "index.html"
-    context_object_name = "meals"
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["form"] = MealFrom
         context["topRate"] = Meal.objects.all().annotate(avg_rating = Avg("mealrating__rating")).order_by('-avg_rating')[0:3]
         context["recently"] = Meal.objects.all().order_by('-dateAdded')[0:3]
+
         return context
 
+    def form_valid(self, form):
+        self.success_url = reverse_lazy("meal:index")
+        return super().form_valid(form)
 
 class MealListView(ListView):
     model = Meal
@@ -67,11 +71,19 @@ class MealListView(ListView):
         return context
 
 
-
-
-
-class MealDetailView(DetailView):
+class MealDetailView(DetailView, FormView):
     model = Meal
+    form_class = MealRatingForm
     template_name = "mealSite/mealDetail.html"
+    success_url = None
     context_object_name = "meal"
+
+    def form_valid(self, form):
+        rating = form.save(commit=False)
+        meal_id = self.kwargs["pk"]
+        rating.meal_id = meal_id
+        rating.save()
+
+        self.success_url = reverse_lazy('meal:mealDetail', kwargs={ "pk": meal_id})
+        return super().form_valid(form)
 

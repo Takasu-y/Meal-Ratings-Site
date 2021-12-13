@@ -5,10 +5,38 @@
 
 
 {% block main %}
-    <h1>Meal Detail Page</h1>
-    <p>{{ meal.pk }}</p>
-    <p>{{ meal.name }}</p>
-    <p>{{ meal.descriotion }}</p>
-    <p>{{ meal.numberOfVotes }}</p>
-    <p>{{ meal.getAvgRating|floatformat }}</p>
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-8 mx-auto">
+            <h1>{{ meal.name }} <span class="h3">{{ meal.getAvgRating|floatformat }} ({{ meal.numberOfVotes }})</span></h1>
+            <div class="text-center mt-3 w-50">
+                <img class="img-fluid" src="https://recursionist.io/img/dashboard/lessons/quickstart/{{ meal.imageUrl }}" alt="Meal img">
+            </div>
+
+            <div class="row mt-5">
+                <div class="col-8 mx-auto">
+                    <p>{{ meal.description|linebreaksbr }}</p>
+                    <h3 class="mt-3">Rating</h3>
+                    <div>
+                        <form action="" method="post">
+                            {% csrf_token %}
+                            <div class="d-flex justify-content-around">
+                                <h5 class="">{{ form.rating }}　<span id="rating-display" class="h2 pl-3">3</span></h5>
+
+                                <div>
+                                    <button type="submit" class="btn btn-primary">Vote</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock main %}
+
+
+{% block extrajs %}
+    <script type="text/javascript" src="{% static 'assets/js/rating.js' %}"></script>
+{% endblock extrajs %}
