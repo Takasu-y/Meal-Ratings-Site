@@ -33,6 +33,7 @@ class Meal(models.Model):
 
         return avgRating
 
+
     def numberOfVotes(self):
         mealName = self.name
         count = MealRating.objects.filter(meal__name=mealName).count()
