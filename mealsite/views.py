@@ -23,6 +23,7 @@ class IndexView(ListView, FormView):
         return context
 
     def form_valid(self, form):
+        form.save()
         self.success_url = reverse_lazy("meal:index")
         return super().form_valid(form)
 

@@ -22,7 +22,7 @@
                             <a href="{% url 'meal:mealDetail' meal.id %}">
                                 <div class="row">
                                     <div class="col-md-3 px-md-0 col-12">
-                                        <img src="https://recursionist.io/img/dashboard/lessons/quickstart/{{ meal.imageUrl }}" class="w-100" alt="...">
+                                        <img src="{{ meal.imageUrl }}" class="w-100" alt="...">
                                     </div>
                                     <div class="col-md-9 p-3 col-12">
                                         <h3>{{ meal.name }} <span class="h5">({{ meal.countryOfOrigin }})</span></h3>

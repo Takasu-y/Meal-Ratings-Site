@@ -17,7 +17,7 @@
                         <div class="col-md-4 mt-3">
                             <div class="card shadow zoom">
                                 <a href="{% url 'meal:mealDetail' meal.id %}">
-                                    <img src="https://recursionist.io/img/dashboard/lessons/quickstart/{{ meal.imageUrl }}" class="card-img-top card-image" alt="...">
+                                    <img src="{{ meal.imageUrl }}" class="card-img-top card-image" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ meal.name }}</h5>
                                         <div class="px-3 d-flex">
@@ -51,7 +51,7 @@
                         <div class="col-md-4 mt-3">
                             <div class="card shadow zoom">
                                 <a href="{% url 'meal:mealDetail' meal.id %}">
-                                    <img src="https://recursionist.io/img/dashboard/lessons/quickstart/{{ meal.imageUrl }}" class="card-img-top card-image" alt="...">
+                                    <img src="{{ meal.imageUrl }}" class="card-img-top card-image" alt="...">
                                     <div class="card-body">
                                         <h5 class="card-title">{{ meal.name }}</span></h5>
                                     </div>
