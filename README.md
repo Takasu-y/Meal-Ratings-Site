@@ -1,14 +1,14 @@
 # Meal Ratings Site
 食事のレビューサイト。
 
-#Demo
+# Demo
 ![f19bf1c427d76e2074a6121869c03365](https://user-images.githubusercontent.com/63044039/146127589-e8aef376-e67f-442b-88a1-7f94524f27de.gif)
 
 
-#Live Demo
+# Live Demo
 https://meal-ratings-site.herokuapp.com/
 
-#Uasge
+# Uasge
 カテゴリ別に食事を閲覧することが出来ます。
 カテゴリは以下の５つ
 * Morning
