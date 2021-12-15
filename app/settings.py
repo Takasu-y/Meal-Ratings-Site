@@ -29,7 +29,7 @@ SQLITE = env.get_value('SQLITE', cast = bool, default = True)
 if DEBUG:
     ALLOWED_HOSTS = ['*']
 else:
-    ALLOWED_HOSTS = ['meal-site.herokuapp.com', 'yourdomain.com']
+    ALLOWED_HOSTS = ['meal-ratings-site.herokuapp.com', 'yourdomain.com']
 
 
 INSTALLED_APPS = [
@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
-    'calc_ratio',
     'mealsite', #追加したapp名
 ]
 
