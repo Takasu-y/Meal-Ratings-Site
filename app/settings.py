@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
+    'calc_ratio',
     'mealsite', #追加したapp名
 ]
 
@@ -90,7 +91,7 @@ else:
         'NAME': env('DB_NAME_SQL'),
         'USER': env('DB_USER_SQL'),
         'PASSWORD': env('DB_PASSWORD_SQL'),
-        'HOST': 'localhost',
+        'HOST': env('DB_HOST_SQL'),
         'PORT': 3306 if DEBUG else env('DB_PORT_SQL'),
     }
 }
