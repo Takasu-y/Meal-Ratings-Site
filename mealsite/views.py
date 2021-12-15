@@ -17,7 +17,7 @@ class IndexView(ListView, FormView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["topRate"] = Meal.objects.all().annotate(avg_rating = Avg("mealrating__rating")).order_by('-avg_rating')[0:3]
+        context["topRate"] = Meal.objects.all().annotate(avg_rating = Avg("mealrating__rating")).filter(avg_rating__gte=3.5).order_by('-avg_rating')[0:3]
         context["recently"] = Meal.objects.all().order_by('-dateAdded')[0:3]
 
         return context
