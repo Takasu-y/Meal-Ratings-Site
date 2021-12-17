@@ -3,45 +3,35 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <div class="container">
         <a class="navbar-brand" href="/">
-            <img src="{% static 'assets/img/logo.png' %}" alt="" height="112">
+            <h1>Meal Recommender</h1>
+            <!-- <img src="{% static 'assets/img/logo.png' %}" alt="" height="112"> -->
         </a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse d-flex justify-content-end" id="navbarNav">
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'meal:mealList' 'morning' %}">Morning</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'meal:mealList' 'afternoon' %}">Afternoon</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'meal:mealList' 'evening' %}">Evening</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'meal:mealList' 'recently' %}">Recently</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'meal:mealList' 'topRate' %}">Top Rated</a>
-                </li>
 
                 {% if user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
-                </li>
-                <li class="nav-item">
-                    <p>{{ user.username }}</p>
+                <!-- ログインしている状態 -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link active dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Welcome! <span class="text-decoration-underline">{{ user.username }}</span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="/">Home</a></li>
+                        <li><a class="dropdown-item" href="{% url 'meal:history' %}">See History</a></li>
+                        <li><a class="dropdown-item" href="{% url 'meal:addMeal' %}">Add A Meal</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{% url 'accounts:logout' %}">Logout</a></li>
+                    </ul>
                 </li>
                 {% else %}
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                    <a class="nav-link" href="{% url 'accounts:login' %}"><button type="button" class="btn btn-outline-secondary">Login</button></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{% url 'accounts:signup' %}">Sign up</a>
+                    <a class="nav-link" href="{% url 'accounts:signup' %}"><button type="button" class="btn btn-primary">Sign up</button></a>
                 </li>
                 {% endif %}
 
