@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_bootstrap5',
-    'mealsite', #追加したapp名
+    'mealsite', #meal reviewer
+    'accounts', #account manager
 ]
 
 MIDDLEWARE = [
@@ -117,9 +118,9 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Core URL settings
 # ログイン機能がある場合はコメントアウトを外す
-# LOGIN_REDIRECT_URL = 'account:index' #ログイン後のダッシュボード
-# LOGIN_URL = 'account:login'
-# LOGOUT_REDIRECT_URL = 'account:login'
+LOGIN_URL = 'accounts:login'
+LOGIN_REDIRECT_URL = '/' #ログイン後のダッシュボード
+LOGOUT_REDIRECT_URL = '/'
 
 
 # Internationalization

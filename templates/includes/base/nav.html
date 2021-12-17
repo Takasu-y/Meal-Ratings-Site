@@ -28,6 +28,23 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'meal:mealList' 'topRate' %}">Top Rated</a>
                 </li>
+
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:logout' %}">Logout</a>
+                </li>
+                <li class="nav-item">
+                    <p>{{ user.username }}</p>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:login' %}">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'accounts:signup' %}">Sign up</a>
+                </li>
+                {% endif %}
+
             </ul>
         </div>
     </div>
