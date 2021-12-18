@@ -4,10 +4,30 @@
 {% load calc_ratio %}
 
 
+{% block extracss %}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock extracss %}
+
+
+
 {% block main %}
     <div class="container mt-4">
         <div class="row">
             <div class="col-md-8 col-12 mx-auto mt-3">
+                <!-- tag検索 -->
+                <div class="d-flex">
+                    <!-- <select name="tags[]" id="js-example-basic-multiple" multiple="multiple"> -->
+                        <!-- {% for tag in tags %} -->
+                            <!-- <option value="{{ tag.name }}">{{ tag.name }}</option> -->
+                        <!-- {% endfor %} -->
+                    <!-- </select> -->
+                    <select class="select" style="width: 200px;" multiple>
+                        {% for tag in tags %}
+                        <option class="btn btn-primary" value="{{ tag.name }}">{{ tag.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <h1>Index <span>({{ count }})</span></h1>
                 <div class="row justify-content-end text-center underline mt-4">
                     <h3 class="px-2 col-md-2 col"><a href="{% url 'meal:index' %}?q=rating">Rating</a></h3>
@@ -48,3 +68,17 @@
         </div>
     </div>
 {% endblock main %}
+
+
+{% block extrajs %}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/select2.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-beta.1/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.2/js/i18n/ja.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.select').select2({ width: "100%" });
+    });
+</script>
+{% endblock extrajs %}

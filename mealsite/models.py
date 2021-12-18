@@ -1,6 +1,13 @@
 from django.db import models
+from django.conf import settings
 
 # Create your models here.
+
+class Tag(models.Model):
+    name = models.CharField("タグ", max_length=50)
+
+    def __str__(self):
+        return self.name
 
 class Meal(models.Model):
     """Model definition for Meal."""
@@ -9,12 +16,9 @@ class Meal(models.Model):
     description = models.TextField("Description")
     imageUrl = models.CharField("URL", max_length=200)
     countryOfOrigin = models.CharField("Country", max_length=120)
-    typicalMealTime = models.IntegerField("Meal Time", choices=[
-        (1, "morning"),
-        (2, "afternoon"),
-        (3, "evening"),
-    ])
     dateAdded = models.DateTimeField("create", auto_now_add=True)
+    tags = models.ManyToManyField(Tag)
+    created_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="投稿者", on_delete=models.CASCADE)
 
 
     def getAvgRating(self):
@@ -57,9 +61,13 @@ class MealRating(models.Model):
     meal = models.ForeignKey(Meal, verbose_name="Meal", on_delete=models.CASCADE)
     rating = models.FloatField("Ratings")
     dateOfRating =models.DateTimeField("Create", auto_now_add=True)
+    voted_by = models.ForeignKey(settings.AUTH_USER_MODEL, verbose_name="投票者", on_delete=models.SET_NULL, blank=True, null=True)
 
     class Meta:
         """Meta definition for MealRating."""
 
         verbose_name = 'MealRating'
         verbose_name_plural = 'MealRatings'
+
+
+

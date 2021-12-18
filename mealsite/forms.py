@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm, Textarea, TextInput
 from .models import Meal, MealRating
 
@@ -11,7 +12,7 @@ class MealFrom(ModelForm):
             field.widget.attrs['class'] = 'form-control mb-4'
     class Meta:
         model = Meal
-        fields = ["name", "description", "imageUrl", "countryOfOrigin", "typicalMealTime"]
+        fields = ["name", "description", "imageUrl", "countryOfOrigin", "tags"]
         widgets = {
             "description": Textarea(attrs={'rows':2, 'cols':15}),
         }
@@ -33,9 +34,12 @@ class MealRatingForm(ModelForm):
                 "type": "range",
                 "max": 5,
                 "min": 0,
-                "step": 0.1
+                "step": 0.5
             })
         }
 
 
-#TODO:MealRatingFormのmealに初期値を入れる必要がある
+# class TagSearchForm(forms.Form):
+#     """TagSearchForm definition."""
+
+#     tags = forms.MultipleChoiceField()
