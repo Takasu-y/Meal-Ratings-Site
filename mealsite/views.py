@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.db.models import Avg
 from django.urls import reverse_lazy
 
-from .models import Meal, Tag
+from .models import Meal, MealRating, Tag
 from .forms import MealFrom, MealRatingForm
 # Create your views here.
 
@@ -43,10 +43,30 @@ class AddMealFormView(LoginRequiredMixin, FormView):
     template_name = "mealSite/addMeal.html"
 
 
-class HistoryListView(LoginRequiredMixin, TemplateView):
-    #TODO: make history model, change TemplateView -> ListView
-    # model = History
+    def form_valid(self, form):
+        meal = form.save(commit=False)
+        user = self.request.user
+        meal.created_by = user
+        meal.save()
+
+        self.success_url = reverse_lazy("meal:index")
+        return super().form_valid(form)
+
+
+class HistoryListView(LoginRequiredMixin, ListView):
+    model = Meal
     template_name = "mealSite/seeHistory.html"
+    context_object_name = "meals"
+
+    def get_queryset(self):
+        meals = self.model.objects.filter(created_by=self.request.user).order_by("-dateAdded")
+        return meals
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["votes"] = MealRating.objects.filter(voted_by=self.request.user).select_related("meal").order_by("-dateOfRating")
+        print(context["votes"])
+        return context
 
 
 class MealDetailView(DetailView, FormView):

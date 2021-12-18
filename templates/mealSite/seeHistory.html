@@ -1,13 +1,56 @@
 {% extends 'base.html' %}
 {% load static %}
 {% load django_bootstrap5 %}
+{% load calc_ratio %}
 
 
 {% block main %}
     <div class="container">
         <div class="row mt-5">
             <div class="col-6 mt-3 mx-auto">
-                <h1>History Page</h1>
+                <h1>Add Meal</h1>
+
+                {% for meal in meals %}
+                <div class="shadow mt-3">
+                    <a href="{% url 'meal:mealDetail' meal.id %}">
+                        <div class="row">
+                            <div class="col-md-3 px-md-0 col-12">
+                                <img src="{{ meal.imageUrl }}" class="w-100" alt="...">
+                            </div>
+                            <div class="col-md-9 p-3 col-12">
+                                <h3>{{ meal.name }} <span class="h5">({{ meal.countryOfOrigin }})</span></h3>
+                                <div class="d-flex justify-content-start">
+                                    <div>
+                                        <div class="star-ratings-sprite mt-3">
+                                            <span class="star-ratings-sprite-rating w-{{ meal.getAvgRating|calcRatio }}"></span>
+                                        </div>
+                                    </div>
+                                    <div class="px-2 align-middle">
+                                        <h5 class="mt-3">{{ meal.getAvgRating|floatformat }} ({{ meal.numberOfVotes }})</h5>
+                                    </div>
+                                </div>
+                                <div class="text-start text-truncate">
+                                    {{ meal.description }}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {% endfor %}
+
+            </div>
+            <div class="col-6 mt-3 mx-auto">
+                <h1>Voted Meal</h1>
+
+                {% for vote in votes %}
+                <div class="shadow mt-3">
+                    <p>
+                        {{ vote.meal }} / Avg {{ vote.meal.getAvgRating|floatformat }}
+                    </p>
+                    <p>Vote Rating: {{ vote.rating }} / by: {{ vote.voted_by }} / at: {{ vote.dateOfRating }}</p>
+
+                </div>
+                {% endfor %}
 
             </div>
         </div>
